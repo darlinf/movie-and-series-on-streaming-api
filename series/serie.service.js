@@ -9,6 +9,7 @@ module.exports = {
   getById,
   create,
   update,
+  getByStreamingService,
   delete: _delete,
 };
 
@@ -18,6 +19,14 @@ async function getAll() {
 
 async function getById(id) {
   return await getSerie(id);
+}
+
+async function getByStreamingService(streamingService) {
+  const series = await db.Serie.findAll({
+    where: { streamingService: streamingService },
+  });
+
+  return series;
 }
 
 async function create(params) {
