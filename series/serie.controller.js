@@ -9,7 +9,10 @@ const serieService = require("./serie.service");
 const authorize = require("_helpers/authorize");
 
 // routes
-
+router.get(
+  "/getMonthSeries/:monthPosition/:streamingServiceName?",
+  getMonthSeries
+);
 router.get("/getAllSeries", getAll);
 router.get("/getByIdSeries/:id", getById);
 router.get("/getByStreamingService/:streamingService", getByStreamingService);
@@ -20,6 +23,13 @@ router.delete("/deleteSeries/:id", authorize(Role.Admin), _delete);
 module.exports = router;
 
 // route functions
+
+function getMonthSeries(req, res, next) {
+  serieService
+    .getMonthSeries(req.params.monthPosition, req.params.streamingServiceName)
+    .then((series) => res.json(series))
+    .catch(next);
+}
 
 function getAll(req, res, next) {
   serieService
